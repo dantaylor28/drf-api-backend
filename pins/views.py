@@ -10,3 +10,8 @@ class PinListView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class PinDetailView(generics.RetrieveDestroyAPIView):
+    serializer_class = PinSerializer
+    queryset = Pin.objects.all()
