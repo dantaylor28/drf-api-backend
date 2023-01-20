@@ -21,4 +21,4 @@ class Post(models.Model):
         ordering = ['-uploaded_at']
 
     def __str__(self):
-        return f"post title: {self.title} | by: {self.owner}"
+        return f"{self.title} | owner: {self.owner}"
