@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
+    """
+    The profile model, of which the owner is a instance of the User model.
+    A default image is set in case a user does not set one themselves.
+    """
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, blank=True)
     location = models.CharField(max_length=200, blank=True)
