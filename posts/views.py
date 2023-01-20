@@ -8,6 +8,9 @@ class PostListView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     queryset = Post.objects.all().order_by('-uploaded_at')
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
