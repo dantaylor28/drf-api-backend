@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'posts',
     'profiles',
     'pins',
+    'comments',
 
     'cloudinary',
     'rest_framework',
