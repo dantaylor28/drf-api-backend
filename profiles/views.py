@@ -31,6 +31,12 @@ class ProfileListView(generics.ListAPIView):
         'owner__profile__location'
     ]
 
+    ordering_fields = [
+        'num_of_followers',
+        'num_of_following',
+        'num_of_posts'
+    ]
+
 
 class ProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
