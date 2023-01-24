@@ -31,6 +31,11 @@ class PostListView(generics.ListCreateAPIView):
         'owner__profile__name'
     ]
 
+    ordering_fields = [
+        'num_of_pins',
+        'num_of_comments'
+    ]
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
