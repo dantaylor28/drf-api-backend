@@ -37,6 +37,13 @@ class ProfileListView(generics.ListAPIView):
         'num_of_posts'
     ]
 
+    filterset_fields = [
+        # shows profiles that are following the selected user
+        'owner__following__followed__profile',
+        # shows profiles that are followed by the selected user
+        'owner__followed__owner__profile'
+    ]
+
 
 class ProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
