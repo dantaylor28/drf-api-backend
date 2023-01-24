@@ -44,7 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'rest_framework',
+    'django_filters',
+    
     'posts',
     'profiles',
     'pins',
@@ -52,10 +57,6 @@ INSTALLED_APPS = [
     'followers',
     'comment_likes',
     'categories',
-
-    'cloudinary',
-    'rest_framework',
-    'django_filters',
 ]
 
 MIDDLEWARE = [
