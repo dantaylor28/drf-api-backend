@@ -1,9 +1,9 @@
 from django.shortcuts import render
+from django.db.models import Count
 from .models import Profile
 from .serializers import ProfileSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
 from rest_framework import generics
-from django.db.models import Count
 
 
 class ProfileListView(generics.ListAPIView):

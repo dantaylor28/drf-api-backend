@@ -11,6 +11,8 @@ class PostSerializer(serializers.ModelSerializer):
     is_post_owner = serializers.SerializerMethodField()
     pinned_id = serializers.SerializerMethodField()
     category_name = serializers.ReadOnlyField(source='category.name')
+    num_of_pins = serializers.ReadOnlyField()
+    num_of_comments = serializers.ReadOnlyField()
 
     def get_is_post_owner(self, obj):
         request = self.context['request']
@@ -30,5 +32,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'title', 'caption', 'owner', 'is_post_owner',
             'category', 'category_name', 'uploaded_at', 'updated_at',
-            'post_image', 'profile_id', 'profile_image', 'pinned_id'
+            'post_image', 'profile_id', 'profile_image', 'pinned_id',
+            'num_of_pins', 'num_of_comments'
+
         ]
