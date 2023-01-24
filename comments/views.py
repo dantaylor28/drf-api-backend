@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Comment
-from .serializers import CommentSerializer
+from .serializers import CommentSerializer, CommentDetailSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
 from rest_framework import generics
 
@@ -22,6 +22,6 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     Retrieves the information of a specified comment, which can be
     edited or deleted if you are the owner of it.
     """
-    serializer_class = CommentSerializer
+    serializer_class = CommentDetailSerializer
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Comment.objects.all()
