@@ -36,6 +36,15 @@ class PostListView(generics.ListCreateAPIView):
         'num_of_comments'
     ]
 
+    filterset_fields = [
+        'owner__profile',
+        'category__name',
+        # will show posts from users the selected user is following
+        'owner__followed__owner__profile',
+        # will show posts the selected user has liked
+        'pins__owner__profile'
+    ]
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
