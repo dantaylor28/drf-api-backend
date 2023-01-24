@@ -19,5 +19,6 @@ class FollowerSerializer(serializers.ModelSerializer):
             return super().create(validated_data)
         except IntegrityError:
             raise serializers.ValidationError({
-                'error': 'error'
+                'error':
+                'you cannot follow yourself or other users more than once'
             })

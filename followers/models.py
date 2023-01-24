@@ -1,5 +1,7 @@
-from django.db import models
+from django.db import models, IntegrityError
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
 
 
 class Follower(models.Model):
@@ -15,3 +17,10 @@ class Follower(models.Model):
 
     def __str__(self):
         return f"{self.followed} followed by {self.owner}"
+
+
+# Handles self following attempts and raises IntegrityError if attempted
+@receiver(pre_save, sender=Follower)
+def stop_self_follow(sender, instance, **kwargs):
+    if instance.owner == instance.followed:
+        raise IntegrityError()
