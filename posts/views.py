@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.db.models import Count
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Post
 from .serializers import PostSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
-from rest_framework import generics
+from rest_framework import generics, filters
 
 
 class PostListView(generics.ListCreateAPIView):
@@ -16,6 +17,19 @@ class PostListView(generics.ListCreateAPIView):
         num_of_pins=Count('pins', distinct=True),
         num_of_comments=Count('comment', distinct=True)
     ).order_by('-uploaded_at')
+
+    filter_backends = [
+        filters.SearchFilter,
+        filters.OrderingFilter,
+        DjangoFilterBackend
+    ]
+
+    search_fields = [
+        'title',
+        'category__name',
+        'owner__username',
+        'owner__profile__name'
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
