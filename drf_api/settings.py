@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'comments',
     'followers',
     'comment_likes',
+    'categories',
 
     'cloudinary',
     'rest_framework',
