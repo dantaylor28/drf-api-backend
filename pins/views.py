@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Pin
 from .serializers import PinSerializer
+from drf_api.permissions import IsOwnerOrReadOnly
 from rest_framework import generics
 
 
@@ -22,4 +23,5 @@ class PinDetailView(generics.RetrieveDestroyAPIView):
     deleted if you are the owner of it.
     """
     serializer_class = PinSerializer
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Pin.objects.all()

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Comment
 from .serializers import CommentSerializer
+from drf_api.permissions import IsOwnerOrReadOnly
 from rest_framework import generics
 
 
@@ -22,4 +23,5 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     edited or deleted if you are the owner of it.
     """
     serializer_class = CommentSerializer
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Comment.objects.all()

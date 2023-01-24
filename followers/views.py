@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Follower
 from .serializers import FollowerSerializer
+from drf_api.permissions import IsOwnerOrReadOnly
 from rest_framework import generics
 
 
@@ -22,4 +23,5 @@ class FollowerDetailView(generics.RetrieveDestroyAPIView):
     if you are signed in as the owner of the follow.
     """
     serializer_class = FollowerSerializer
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Follower.objects.all()
