@@ -7,13 +7,6 @@ class FollowerSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     followed_user = serializers.ReadOnlyField(source='followed.username')
 
-    class Meta:
-        model = Follower
-        fields = [
-            'id', 'owner', 'followed', 'followed_user',
-            'timestamp'
-        ]
-
     def create(self, validated_data):
         try:
             return super().create(validated_data)
@@ -22,3 +15,10 @@ class FollowerSerializer(serializers.ModelSerializer):
                 'error':
                 'you cannot follow yourself or other users more than once'
             })
+
+    class Meta:
+        model = Follower
+        fields = [
+            'id', 'owner', 'followed', 'followed_user',
+            'timestamp'
+        ]

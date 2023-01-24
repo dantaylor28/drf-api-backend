@@ -34,5 +34,4 @@ class PostSerializer(serializers.ModelSerializer):
             'category', 'category_name', 'uploaded_at', 'updated_at',
             'post_image', 'profile_id', 'profile_image', 'pinned_id',
             'num_of_pins', 'num_of_comments'
-
         ]

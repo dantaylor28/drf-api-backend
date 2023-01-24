@@ -11,7 +11,7 @@ class CommentListView(generics.ListCreateAPIView):
     Authenticated users are able to write a comment here.
     """
     serializer_class = CommentSerializer
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.all().order_by('-timestamp')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
