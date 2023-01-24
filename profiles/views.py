@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.db.models import Count
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Profile
 from .serializers import ProfileSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
-from rest_framework import generics
+from rest_framework import generics, filters
 
 
 class ProfileListView(generics.ListAPIView):
@@ -17,6 +18,18 @@ class ProfileListView(generics.ListAPIView):
         num_of_following=Count('owner__following', distinct=True),
         num_of_pinned_posts=Count('owner__pin', distinct=True)
     ).order_by('-created_at')
+
+    filter_backends = [
+        filters.SearchFilter,
+        filters.OrderingFilter,
+        DjangoFilterBackend
+    ]
+
+    search_fields = [
+        'owner__username',
+        'owner__profile__name',
+        'owner__profile__location'
+    ]
 
 
 class ProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
