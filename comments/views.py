@@ -21,6 +21,8 @@ class CommentListView(generics.ListCreateAPIView):
 
     filterset_fields = ['post', 'owner']
 
+    ordering_fields = ['timestamp']
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
