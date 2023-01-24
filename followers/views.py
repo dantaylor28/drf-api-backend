@@ -5,6 +5,10 @@ from rest_framework import generics
 
 
 class FollowerListView(generics.ListCreateAPIView):
+    """
+    Lists all instances where a user follows another user.
+    Authenticated users can follow a profile using the form.
+    """
     serializer_class = FollowerSerializer
     queryset = Follower.objects.all().order_by('-timestamp')
 
@@ -13,5 +17,9 @@ class FollowerListView(generics.ListCreateAPIView):
 
 
 class FollowerDetailView(generics.RetrieveDestroyAPIView):
+    """
+    Retrieves a single user following result. This can be deleted
+    if you are signed in as the owner of the follow.
+    """
     serializer_class = FollowerSerializer
     queryset = Follower.objects.all()
