@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.db.models import Count
 from .models import Category
 from .serializers import CategorySerializer
-from rest_framework import generics
-from drf_api.permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
+from rest_framework import generics, filters
+from drf_api.permissions import IsAdminOrReadOnly
 
 
 class CategoryListView(generics.ListCreateAPIView):
@@ -12,6 +12,14 @@ class CategoryListView(generics.ListCreateAPIView):
     queryset = Category.objects.annotate(
         num_of_posts=Count('post', distinct=True)
     )
+
+    filter_backends = [
+        filters.SearchFilter,
+        filters.OrderingFilter
+    ]
+
+    search_fields = ['name']
+    ordering_fields = ['timestamp']
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
