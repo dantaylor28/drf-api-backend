@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Count
 from .models import Comment
 from .serializers import CommentSerializer, CommentDetailSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -13,7 +14,9 @@ class CommentListView(generics.ListCreateAPIView):
     can be filtered and ordered by post, owner and timestamp.
     """
     serializer_class = CommentSerializer
-    queryset = Comment.objects.all().order_by('-timestamp')
+    queryset = Comment.objects.annotate(
+        num_of_comment_likes=Count('comment_likes', distinct=True)
+    ).order_by('-timestamp')
 
     filter_backends = [
         DjangoFilterBackend,
@@ -35,4 +38,6 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     serializer_class = CommentDetailSerializer
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.annotate(
+        num_of_comment_likes=Count('comment_likes', distinct=True)
+    ).order_by('-timestamp')
