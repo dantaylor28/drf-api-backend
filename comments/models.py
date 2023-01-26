@@ -19,4 +19,4 @@ class Comment(models.Model):
         ordering = ['-timestamp']
 
     def __str__(self):
-        return f"{self.owner} commented: {self.text}"
+        return f"{self.owner} | commented: {self.text}"
