@@ -24,3 +24,16 @@ class PostListViewTests(APITestCase):
         count = Post.objects.count()
         self.assertEqual(count, 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class PostDetailViewTests(APITestCase):
+    def setUp(self):
+        dan = User.objects.create_user(username='dan', password='password1')
+        sabina = User.objects.create_user(username='sabina', password='password1')
+        Post.objects.create(owner=dan, title='dans post')
+        Post.objects.create(owner=sabina, title='sabinas post')
+
+    def test_get_post_by_id(self):
+        response = self.client.get('/posts/1')
+        self.assertEqual(response.data['title'], 'dans post')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
