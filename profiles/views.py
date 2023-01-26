@@ -9,7 +9,9 @@ from rest_framework import generics, filters
 
 class ProfileListView(generics.ListAPIView):
     """
-    Lists out all users and their profile information
+    Lists out all users and their profile information.
+    Profiles can be filtered, searched and ordered from
+    a number of options.
     """
     serializer_class = ProfileSerializer
     queryset = Profile.objects.annotate(

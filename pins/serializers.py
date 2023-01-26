@@ -4,6 +4,11 @@ from django.db import IntegrityError
 
 
 class PinSerializer(serializers.ModelSerializer):
+    """
+    Post title has been added as an extra field and the create
+    method is there to raise an integrity error if posts are
+    pinned more than once by the same user.
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     post_title = serializers.ReadOnlyField(source='post.title')
 

@@ -4,6 +4,11 @@ from django.db import IntegrityError
 
 
 class FollowerSerializer(serializers.ModelSerializer):
+    """
+    The followed user's username has been included as an extra
+    field along with the create method to ensure you cannot follow
+    yourself or other users more than once.
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     followed_user = serializers.ReadOnlyField(source='followed.username')
 

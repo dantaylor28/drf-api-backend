@@ -5,6 +5,12 @@ from pins.models import Pin
 
 
 class PostSerializer(serializers.ModelSerializer):
+    """
+    Nemrous extra fields are present to show num_of_pins/
+    comments, category name and more. Image validation is also
+    present ensuring the file size, height and width doesn't
+    exceed the maximum.
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(

@@ -10,7 +10,8 @@ from rest_framework import generics, filters
 class PostListView(generics.ListCreateAPIView):
     """
     Lists out all posts and the ability to create your own
-    if you are signed in and authenticated
+    if you are signed in and authenticated. Posts can be
+    filtered, searched and ordered by numerous options.
     """
     serializer_class = PostSerializer
     queryset = Post.objects.annotate(

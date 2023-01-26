@@ -7,6 +7,11 @@ from drf_api.permissions import IsOwnerOrReadOnly
 
 
 class CommentLikeListView(generics.ListCreateAPIView):
+    """
+    A list of all comment likes with fields that show the liked
+    comment, which user liked it and its timestamp. Can be filtered
+    by different comments.
+    """
     serializer_class = CommentLikeSerializer
     queryset = CommentLike.objects.all().order_by('-timestamp')
 
@@ -19,6 +24,10 @@ class CommentLikeListView(generics.ListCreateAPIView):
 
 
 class CommentLikeDetailView(generics.RetrieveDestroyAPIView):
+    """
+    Retrieve a single liked comment. The ability to delete a like
+    is available if you are the owner of it.
+    """
     serializer_class = CommentLikeSerializer
     permission_classes = [IsOwnerOrReadOnly]
     queryset = CommentLike.objects.all()

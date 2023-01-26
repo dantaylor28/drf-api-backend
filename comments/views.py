@@ -9,7 +9,8 @@ from rest_framework import generics, filters
 class CommentListView(generics.ListCreateAPIView):
     """
     List of all comments, with the relevant fields included.
-    Authenticated users are able to write a comment here.
+    Authenticated users are able to write a comment here. Comments
+    can be filtered and ordered by post, owner and timestamp.
     """
     serializer_class = CommentSerializer
     queryset = Comment.objects.all().order_by('-timestamp')

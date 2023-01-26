@@ -7,6 +7,10 @@ from drf_api.permissions import IsAdminOrReadOnly
 
 
 class CategoryListView(generics.ListCreateAPIView):
+    """
+    A list view of all categories and how many posts are in
+    each. Only an admin can create new categories.
+    """
     serializer_class = CategorySerializer
     permission_classes = [IsAdminOrReadOnly]
     queryset = Category.objects.annotate(
@@ -23,6 +27,10 @@ class CategoryListView(generics.ListCreateAPIView):
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve a specified category and edit or delete it only if
+    you are an admin.
+    """
     serializer_class = CategorySerializer
     permission_classes = [IsAdminOrReadOnly]
     queryset = Category.objects.annotate(

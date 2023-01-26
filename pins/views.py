@@ -10,6 +10,7 @@ class PinListView(generics.ListCreateAPIView):
     """
     Lists out the information of all pinned posts, also
     specific posts can be pinned here if you are authenticated.
+    Pins can be filtered by post or a specific profile.
     """
     serializer_class = PinSerializer
     queryset = Pin.objects.all().order_by('-timestamp')
