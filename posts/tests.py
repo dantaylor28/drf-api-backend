@@ -41,3 +41,10 @@ class PostDetailViewTests(APITestCase):
     def test_get_non_existant_id(self):
         response = self.client.get('posts/32')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_update_own_post(self):
+        self.client.login(username='dan', password='password1')
+        response = self.client.put('/posts/1', {'title': 'dans updated post'})
+        post = Post.objects.filter(pk=1).first()
+        self.assertEqual(post.title, 'dans updated post')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
