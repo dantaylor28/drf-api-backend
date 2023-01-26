@@ -14,6 +14,7 @@ class PostSerializer(serializers.ModelSerializer):
     category_name = serializers.ReadOnlyField(source='category.name')
     num_of_pins = serializers.ReadOnlyField()
     num_of_comments = serializers.ReadOnlyField()
+    updated_at = serializers.SerializerMethodField()
 
     def validate_post_image(self, value):
         if value.size > 1024 * 1024 * 2:
@@ -42,6 +43,9 @@ class PostSerializer(serializers.ModelSerializer):
             ).first()
             return pin.id if pin else None
         return None
+
+    def get_updated_at(self, obj):
+        return naturaltime(obj.updated_at)
 
     class Meta:
         model = Post
