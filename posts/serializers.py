@@ -14,6 +14,21 @@ class PostSerializer(serializers.ModelSerializer):
     num_of_pins = serializers.ReadOnlyField()
     num_of_comments = serializers.ReadOnlyField()
 
+    def validate_post_image(self, value):
+        if value.size > 1024 * 1024 * 2:
+            raise serializers.ValidationError(
+                'Image files cannot be larger than 2mb'
+            )
+        if value.image.width > 4096:
+            raise serializers.ValidationError(
+                'Image width cannot be larger than 4096px'
+            )
+        if value.image.height > 4096:
+            raise serializers.ValidationError(
+                'Image height cannot be larger than 4096px'
+            )
+        return value
+
     def get_is_post_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
