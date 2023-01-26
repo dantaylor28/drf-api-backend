@@ -13,3 +13,7 @@ class PostListViewTests(APITestCase):
         Post.objects.create(owner=dan, title='test')
         response = self.client.get('/posts/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_logged_out_cannot_post(self):
+        response = self.client.post('/posts/', {'title': 'test2'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
