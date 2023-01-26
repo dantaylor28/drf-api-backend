@@ -1,3 +1,4 @@
+from django.contrib.humanize.templatetags.humanize import naturalday
 from rest_framework import serializers
 from .models import Profile
 from followers.models import Follower
@@ -11,6 +12,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     num_of_following = serializers.ReadOnlyField()
     num_of_followers = serializers.ReadOnlyField()
     num_of_pinned_posts = serializers.ReadOnlyField()
+    created_at = serializers.SerializerMethodField()
+    updated_at = serializers.SerializerMethodField()
 
     def validate_profile_image(self, value):
         if value.size > 1024 * 1024 * 2:
@@ -39,6 +42,12 @@ class ProfileSerializer(serializers.ModelSerializer):
             ).first()
             return following.id if following else None
         return None
+
+    def get_updated_at(self, obj):
+        return naturalday(obj.updated_at)
+
+    def get_created_at(self, obj):
+        return naturalday(obj.created_at)
 
     class Meta:
         model = Profile
