@@ -49,3 +49,8 @@ class PinDetailViewTests(APITestCase):
         self.client.login(username='dan', password='password1')
         response = self.client.delete('/pins/1')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_others_pin(self):
+        self.client.login(username='dan', password='password1')
+        response = self.client.delete('/pins/2')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
