@@ -36,3 +36,7 @@ class FollowerDetailViewTests(APITestCase):
     def test_get_follow_by_id(self):
         response = self.client.get('/followers/1')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_non_existant_follow_id(self):
+        response = self.client.get('followers/32')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
