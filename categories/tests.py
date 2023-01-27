@@ -34,3 +34,8 @@ class CategoryDetailViewTests(APITestCase):
     def test_get_non_existant_category_id(self):
         response = self.client.get('categories/32')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_only_admin_can_delete_category(self):
+        self.client.login(username='dan', password='password1')
+        response = self.client.delete('/categories/1')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
