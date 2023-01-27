@@ -16,3 +16,10 @@ class FollowerListViewTests(APITestCase):
         follow = Follower.objects.create(owner=dan, followed=sabina)
         response = self.client.get('/followers/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_logged_out_cannot_follow(self):
+        dan = User.objects.get(username='dan')
+        sabina = User.objects.get(username='sabina')
+        follow = Follower.objects.create(owner=dan, followed=sabina)
+        response = self.client.post('/followers/', {'followed': 'follow'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
