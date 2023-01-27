@@ -1,3 +1,15 @@
-from django.test import TestCase
+from django.contrib.auth.models import User
+from .models import Category
+from rest_framework import status
+from rest_framework.test import APITestCase
 
-# Create your tests here.
+
+class CategoryListViewTests(APITestCase):
+    def setUp(self):
+        dan = User.objects.create_user(username='dan', password='password1')
+
+    def test_list_all_categories(self):
+        dan = User.objects.get(username='dan')
+        Category.objects.create(name='food')
+        response = self.client.get('/categories/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

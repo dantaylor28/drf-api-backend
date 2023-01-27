@@ -46,3 +46,13 @@ class CommentLikeDetailViewTests(APITestCase):
     def test_get_non_existant_comment_like_id(self):
         response = self.client.get('comments/likes/32')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_own_comment_like(self):
+        self.client.login(username='dan', password='password1')
+        response = self.client.delete('/comments/likes/1')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_others_comment_like(self):
+        self.client.login(username='dan', password='password1')
+        response = self.client.delete('/comments/likes/2')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
