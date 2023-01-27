@@ -14,3 +14,9 @@ class CommentListViewTests(APITestCase):
         Comment.objects.create(owner=dan, post=post1)
         response = self.client.get('/comments/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_logged_out_cannot_comment(self):
+        dan = User.objects.get(username='dan')
+        post1 = Post.objects.create(owner=dan, title='dans post')
+        response = self.client.post('/comments/', {'post': 'post1'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
