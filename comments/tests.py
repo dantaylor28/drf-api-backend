@@ -43,3 +43,9 @@ class CommentDetailViewTests(APITestCase):
         response = self.client.get('/comments/1')
         self.assertEqual(response.data['text'], 'hi')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_non_existant_comment_id(self):
+        response = self.client.get('comments/32')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    
