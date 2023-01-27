@@ -48,4 +48,14 @@ class CommentDetailViewTests(APITestCase):
         response = self.client.get('comments/32')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    
+    def test_update_own_comment(self):
+        self.client.login(username='dan', password='password1')
+        response = self.client.put('/comments/1', {'text': 'new comment'})
+        comment = Comment.objects.filter(pk=1).first()
+        self.assertEqual(comment.text, 'new comment')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_others_comment(self):
+        self.client.login(username='dan', password='password1')
+        response = self.client.put('/comments/2', {'text': 'new comment'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
