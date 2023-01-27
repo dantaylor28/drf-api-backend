@@ -23,3 +23,16 @@ class FollowerListViewTests(APITestCase):
         follow = Follower.objects.create(owner=dan, followed=sabina)
         response = self.client.post('/followers/', {'followed': 'follow'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class FollowerDetailViewTests(APITestCase):
+    def setUp(self):
+        dan = User.objects.create_user(username='dan', password='password1')
+        sabina = User.objects.create_user(
+            username='sabina', password='password1')
+        follow1 = Follower.objects.create(owner=dan, followed=sabina)
+        follow2 = Follower.objects.create(owner=sabina, followed=dan)
+
+    def test_get_follow_by_id(self):
+        response = self.client.get('/followers/1')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
