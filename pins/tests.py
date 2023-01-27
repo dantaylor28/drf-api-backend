@@ -21,3 +21,19 @@ class PinListViewTests(APITestCase):
         post = Post.objects.create(owner=dan, title='dans post')
         response = self.client.post('/pins/', {'post': 'post'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    
+
+class PinDetailViewTests(APITestCase):
+    def setUp(self):
+        dan = User.objects.create_user(username='dan', password='password1')
+        sabina = User.objects.create_user(
+            username='sabina', password='password1')
+        post1 = Post.objects.create(owner=dan, title='dans post')
+        post2 = Post.objects.create(owner=sabina, title='sabinas post')
+        Pin.objects.create(owner=dan, post=post1)
+        Pin.objects.create(owner=sabina, post=post2)
+
+    def test_get_pin_by_id(self):
+        response = self.client.get('/pins/1')
+        self.assertEqual(response.data['post'], 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
