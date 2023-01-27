@@ -16,3 +16,11 @@ class CommentLikeListViewTests(APITestCase):
         CommentLike.objects.create(owner=dan, comment=comment1)
         response = self.client.get('/comments/likes/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_logged_out_cannot_like_comment(self):
+        dan = User.objects.get(username='dan')
+        post1 = Post.objects.create(owner=dan, title='dans post')
+        comment1 = Comment.objects.create(owner=dan, post=post1)
+        response = self.client.post(
+            '/comments/likes/', {'comment': 'comment1'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
