@@ -24,3 +24,25 @@ class CommentLikeListViewTests(APITestCase):
         response = self.client.post(
             '/comments/likes/', {'comment': 'comment1'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class CommentLikeDetailViewTests(APITestCase):
+    def setUp(self):
+        dan = User.objects.create_user(username='dan', password='password1')
+        sabina = User.objects.create_user(
+            username='sabina', password='password1')
+        post1 = Post.objects.create(owner=dan, title='dans post')
+        post2 = Post.objects.create(owner=sabina, title='sabinas post')
+        comment1 = Comment.objects.create(owner=dan, post=post2, text='hi')
+        comment2 = Comment.objects.create(owner=sabina, post=post1, text='bye')
+        CommentLike.objects.create(owner=dan, comment=comment2)
+        CommentLike.objects.create(owner=sabina, comment=comment1)
+
+    def test_get_comment_like_by_id(self):
+        response = self.client.get('/comments/likes/1')
+        self.assertEqual(response.data['comment_text'], 'bye')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_non_existant_comment_like_id(self):
+        response = self.client.get('comments/likes/32')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
