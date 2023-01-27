@@ -27,3 +27,19 @@ class CommentListViewTests(APITestCase):
         post1 = Post.objects.create(owner=dan, title='dans post')
         response = self.client.post('/posts/', {'text': 'hey'})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class CommentDetailViewTests(APITestCase):
+    def setUp(self):
+        dan = User.objects.create_user(username='dan', password='password1')
+        sabina = User.objects.create_user(
+            username='sabina', password='password1')
+        post1 = Post.objects.create(owner=dan, title='dans post')
+        post2 = Post.objects.create(owner=sabina, title='sabinas post')
+        Comment.objects.create(owner=dan, post=post2, text='hi')
+        Comment.objects.create(owner=sabina, post=post1, text='bye')
+
+    def test_get_comment_by_id(self):
+        response = self.client.get('/comments/1')
+        self.assertEqual(response.data['text'], 'hi')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
