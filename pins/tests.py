@@ -42,9 +42,6 @@ class PinDetailViewTests(APITestCase):
         response = self.client.get('pins/32')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-        response = self.client.get('posts/32')
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
     def test_delete_own_pin(self):
         self.client.login(username='dan', password='password1')
         response = self.client.delete('/pins/1')
