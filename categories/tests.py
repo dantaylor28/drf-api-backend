@@ -14,7 +14,23 @@ class CategoryListViewTests(APITestCase):
         response = self.client.get('/categories/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_logged_in_can_make_category(self):
+    def test_only_admin_can_make_category(self):
         self.client.login(username='dan', password='password1')
         response = self.client.post('/categories/', {'name': 'food'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class CategoryDetailViewTests(APITestCase):
+    def setUp(self):
+        User.objects.create_user(username='dan', password='password1')
+        Category.objects.create(name='category1')
+        Category.objects.create(name='category2')
+
+    def test_get_category_by_id(self):
+        response = self.client.get('/categories/1')
+        self.assertEqual(response.data['name'], 'category1')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_non_existant_category_id(self):
+        response = self.client.get('categories/32')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
