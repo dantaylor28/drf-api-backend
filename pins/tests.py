@@ -15,3 +15,9 @@ class PinListViewTests(APITestCase):
         Pin.objects.create(owner=dan, post=test)
         response = self.client.get('/pins/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_logged_out_cannot_pin(self):
+        dan = User.objects.get(username='dan')
+        post = Post.objects.create(owner=dan, title='dans post')
+        response = self.client.post('/pins/', {'post': 'post'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
