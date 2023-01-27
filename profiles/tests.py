@@ -4,6 +4,15 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 
+class ProfileListViewTests(APITestCase):
+    def setUp(self):
+        dan = User.objects.create_user(username='dan', password='password1')
+
+    def test_list_all_profiles(self):
+        response = self.client.get('/profiles/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
 class ProfileDetailViewTests(APITestCase):
     def setUp(self):
         dan = User.objects.create_user(username='dan', password='password1')
