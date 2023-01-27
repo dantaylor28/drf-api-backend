@@ -40,3 +40,13 @@ class FollowerDetailViewTests(APITestCase):
     def test_get_non_existant_follow_id(self):
         response = self.client.get('followers/32')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_own_follow(self):
+        self.client.login(username='dan', password='password1')
+        response = self.client.delete('/followers/1')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_others_follow(self):
+        self.client.login(username='dan', password='password1')
+        response = self.client.delete('/followers/2')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
