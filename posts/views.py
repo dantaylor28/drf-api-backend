@@ -42,7 +42,7 @@ class PostListView(generics.ListCreateAPIView):
         'category__name',
         # will show posts from users the selected user is following
         'owner__followed__owner__profile',
-        # will show posts the selected user has liked
+        # will show posts the selected user has pinned
         'pins__owner__profile'
     ]
 
