@@ -34,5 +34,13 @@ My profiles app stores all data regarding all of the users profile information. 
 
 Within my serializers.py file, there are several extra Serializer and ReadOnly fields added. Three of these include num_of_posts/followers and following. These fields use the Count method in my views.py to add up the totals which can then be used on the frontend to display statistics to different users. Similar to my post serializer, there is also image validation present here to ensure profile_images meet the required dimensions and file size.
 
-As profiles are created automatically using the create_profile function described above, my ProfileList is just a standard ListAPIView. I have added multiple ways to explore profiles here which include DjangoFilterBackend, searchFilter and orderingFilter. Profiles can be searched based upon usernames, profile names and even location. The filterset fields included here are as shown in the drf_api walkthrough. These were to show profiles that are following a selected user and profiles that are followed by the selected user. Lastly, my ProfileDetail view here is a retrieveUpdateDestroy and as usual the permission class only allows the profile user access to these functionalities. 
+As profiles are created automatically using the create_profile function described above, my ProfileList is just a standard ListAPIView. I have added multiple ways to explore profiles here which include DjangoFilterBackend, searchFilter and orderingFilter. Profiles can be searched based upon usernames, profile names and even location. The filterset fields included here are as shown in the drf_api walkthrough. These were to show profiles that are following a selected user and profiles that are followed by the selected user. Lastly, my ProfileDetail view here is a retrieveUpdateDestroy and as usual the permission class only allows the profile user access to these functionalities.
+
+### Followers App
+
+This app contains all instances of a user that is following or is followed by another user. Fields present in the model include the user who is the follower, the user doing the following and the timestamp of when the follow was received. There are 2 foreign key fields here linking to User, therfore they use the related_name attribute to make sure django can tell them apart. Also in my Follower model is another function, which will raise an integrity error if a user attempts to follow his/her own profile.
+
+My serializers.py contains a couple of extra readOnly fields just specifying the owner and the user who received the follow. The create function is present so users can succesfully create a follow and details of the Integrity error raised from self following is also present here. My views are very simple and contain minimal information also. The list view allows users to list and create followers and if you are the owner of a follow this can then be deleted in the FollowerDetail view.
+
+
 
