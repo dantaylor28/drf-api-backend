@@ -198,3 +198,34 @@ os.environ.setdefault("SECRET_KEY", "CreateANEWRandomValueHere")
 
 The link to my live api can be accessed here -
 https://social-media-drf-api.herokuapp.com/
+
+## Testing 
+
+### Manual Testing 
+
+Extensive testing has been carried out throughout production in the development server and also on the deployed live site to ensure the functionality still works as expected. 
+
+Testing that I have carried out in the development server includes - 
+
+- I have created numerous user accounts and ensured a profile instance has also been created and linked to the appropriate user
+- One user cannot create more than one profile and if they try, an appropriate error message is displayed to them.
+- I have uploaded many posts in the testing stage and checked to make sure the correct data is saved to the database.
+- Only signed in users can create posts and the edit form only shows up if you own the post. 
+- The delete button only shows up in my detailViews if you are the owner of the data. 
+- Authenticated users can create pins and they function as expected. You can only delete the pin if you are the wner of it.
+- Any edits that are made to data is saved, and it then displays with the updated data showing.
+- Authenticated users can comment on posts. The comments save as expected and show the correct data. post_title, text etc
+- The same user can leave multiple comments on one post but if attempts are made to pin a post or like a comment more than once, then an appropriate error message is displayed.
+- As an unauthenticated user you can read all the data that is in the api, but you are unable to create any data yourself and no forms for this functionality show up on any of the pages.
+- My IsAdminOrReadOnly permission functions as expected. If anybody other than an admin is on the category list/detail views, it is only a read only file and no data can be created or deleted.
+- All of the filters that have been implemented work as expected. If I have tested these out multiple times and checked for any problems, but the expected data is always provided.
+- All of my urls lead to the correct pages on the api. No 404 errors are displayed and all the routes function correctly.
+- All of my python code passes through the validator with no issues
+
+Once I deployed my api to Heroku, I carried out the same testing as outlined above in the development server and all of the functionality still works the same as it did before the deployment. As I can not perform CRUD operations on the deployed live api site, I got around this by navigating to the admin panel and testing all of the CRUD functionality from there. 
+
+### Automatic Testing 
+
+As well as the extensive manual testing carried out, I have included automatic testing in this project. Every app within the workspace has automatic tests, checking numerous functionality including CRUD behaviour, permissions, the creation of users and more. There is a total of 42 tests in total and they are all passing as expected.
+
+![automatic-tests-img](static/readme-images/automatic-tests.png)
