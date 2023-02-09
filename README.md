@@ -71,3 +71,13 @@ On my views.py file, my commentLikeListView is a listCreateAPIView. If signed in
 The Category model stores the names of a category that can be assigned to a post on the creation of it. Within the Post model, there is a category field present which is a foreignKey value linking to this model. The idea of this, is that the user will have access to a dropdown list of categories on the form in the frot-end that they can choose from and assign their post to. As well as assigning a category when creating a post, users can assign or change them when editing one of their posts also. 
 
 In my CategorySerializer, the fields present in my model are listed here as well as one extra which adds up all the posts assigned to a specific category. In my views.py file here, I have assigned both the listView and the detailView the permission class of IsAdminOrReadOnly. This is because I want only an admin to have the ability to create new categories or delete exisiting ones. Search and ordering have been included here so users searching for a single category can be found or categories can be ordered based on their timestamp of creation.
+
+### Admin Panel
+
+One of the first steps taken in this project was to create my superuser and ensure that functionality was running as expected. Throughout the development process, I registered all of my apps in admin.py to ensure I can access these features there and test the functionality from the admin panel if necessary. This also made testing easier once I had deployed the application as it is difficult to test from the api deployed site unless its done through the admin panel.
+Full CRUD functionality works as expected and any registered administrators can monitor all goings on from here.
+
+The login for the superuser account is as follows - 
+
+***Username - admin***\
+***Password - esporta1993***
