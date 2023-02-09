@@ -6,7 +6,7 @@ Users can follow other profiles and you have the ability to customise your own b
 
 ## API Features
 
-### drf_api app
+### Drf_Api app
 
 The drf_api is my initial project app that contains the settings.py, my main urls.py and my permsissions.py files. To allow my api to use Cloudinary for its image file storage, the settings.py file contains all the relevant code to acheive this. Also in my settings.py is all code relating to the implementation of jwt refresh tokens, corsheaders and the list of all of my installed apps. The code to achieve most of this functionality was taken from the drf_api walkthrough project.
 
@@ -82,7 +82,7 @@ The login for the superuser account is as follows -
 ***Username - admin***\
 ***Password - esporta1993***
 
-## Future Feature To Implement
+## Future Features To Implement
 
 - I would like to include a new app for comment_replies. I feel this would work well alongside the comment_likes that I have already included in this project.
 
@@ -247,4 +247,10 @@ Once I did this, the deployment worked as expected.
 
 As far as I have found, there are no remaining bugs present in this project. If this changes, they will be documented here.
 
-## Credits 
+## Credits
+
+- Code Institutes walkthrough project drf_api helped me alot in the implementation of several features in this project. As django-rest-framework was totally new to me, this walkthrough really helped me get to grips with the framework and understand some of the features that were new to me.
+
+- Code Institute slack group. The community here was a great resource during this project, particularly the project 5 Advanced-Frontend group. There was plenty of interaction and most problems could be figured out through the use of this channel.
+
+- I used stack-overflow to research more about django-filters and this helped me to understand the features of that much better.
