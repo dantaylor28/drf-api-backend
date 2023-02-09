@@ -81,3 +81,9 @@ The login for the superuser account is as follows -
 
 ***Username - admin***\
 ***Password - esporta1993***
+
+## Future Feature To Implement
+
+- I would like to include a new app for comment_replies. I feel this would work well alongside the comment_likes that I have already included in this project.
+
+- Signing in with social media is a feature I planned to include in the planning stages of this project. Unfortunately, I did not have the time to implement this before my submission date.
