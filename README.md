@@ -87,3 +87,18 @@ The login for the superuser account is as follows -
 - I would like to include a new app for comment_replies. I feel this would work well alongside the comment_likes that I have already included in this project.
 
 - Signing in with social media is a feature I planned to include in the planning stages of this project. Unfortunately, I did not have the time to implement this before my submission date.
+
+## Languages/Libraries Used
+
+Below is a list of the requirements that were included to make this project
+
+- Django
+- Django Rest Framework
+- Cloudinary
+- Pillow
+- Django allauth 
+- Django filters
+- Psycopg2 database
+- SimpleJWT
+
+The primary language used in the production of this api was Django and the django-rest-framework. Pillow is a library that is a required depenedency you have to install when using an imageField on any of your models. I used Cloudinary for my default image storage. This is because Django uses an ephemeral file system, so Cloudinary was a  great choice to prevent my image files being deleted after a certain amount of time has passed. Django filters was a library used to add the functionality to filter the data in my views.py files. It makes it extremly easy to add this functionality and improves the user experience considerably. To add token refreshing to my project, I used simpleJWT as shown in the drf_api walkthrough.
