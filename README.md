@@ -229,3 +229,22 @@ Once I deployed my api to Heroku, I carried out the same testing as outlined abo
 As well as the extensive manual testing carried out, I have included automatic testing in this project. Every app within the workspace has automatic tests, checking numerous functionality including CRUD behaviour, permissions, the creation of users and more. There is a total of 42 tests in total and they are all passing as expected.
 
 ![automatic-tests-img](static/readme-images/automatic-tests.png)
+
+## Bugs 
+
+### Fixed Bugs
+
+- Date/time format not showing up as expected for my profile views. I was attempting to use naturaltime to display the updated_at field in my profiles model but I kept on getting an error. After some time, I discovered that I used a date method rather than datetime method in my model. Once I saw this, I realised I could use naturaldate instead of naturaltime and this then displayed how I wanted it to.
+
+- Logout functionality not working as expected. I saw that dj-rest-auth has a bug that prevents users from being able to logout successfully. This had affected me previously when I was attempting to complete the walkthrough project moments. To fix this bug, I had to create a new custom logout view in drf_api/views.py and manually code in the response. This code was taken from Code Institute and after implementing that, the logout functionality worked as expected.
+
+- Deployment failed when attempting to deploy the project to Heroku. In the build logs, I was getting an error saying that I had to specify the node engine in my package.json-file. After some research, I discovered I had to insert the following code - "engines": {
+    "node": "16.18.0"
+},
+Once I did this, the deployment worked as expected.
+
+### Unfixed Bugs
+
+As far as I have found, there are no remaining bugs present in this project. If this changes, they will be documented here.
+
+## Credits 
