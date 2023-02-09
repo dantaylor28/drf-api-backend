@@ -195,3 +195,6 @@ os.environ.setdefault("SECRET_KEY", "CreateANEWRandomValueHere")
 - Navigate to the deploy tab on Heroku
 - Connect to your GitHub account and type your repository name 
 - Click deploy and your project should now be live
+
+The link to my live api can be accessed here -
+https://social-media-drf-api.herokuapp.com/
