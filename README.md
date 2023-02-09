@@ -58,6 +58,10 @@ In my CommentSerializer, I have added some extra fields to give users more detai
 
 In my views.py file, the list view is a ListCreateAPIView as normal and includes the annotate method which is used to calculate the num_of_comment_likes and display the results to the user. Comments can be filtered by owner and post, while ordering fields are also available to display comments in the order of creation via their timestamp. The detail view is a retrieveUpdateDestroy view and the only difference here is that the serializer class is set to CommentDetailSerializer as opposed to CommentSerializer so the post is auto-selected.
 
+### Comment_likes App
 
+This model stores all the data on comment likes. Similar to alot of my other models, it has two foreign key fields. One being User and the other Comment in this instance. There is a unique_together field between owner and comment, which is present to ensure a comment can only be liked by a specific user one time. 
 
+The only extra field present in my serializer is comment_text which as the name suggests, shows the actual comment to the user. Also present in my serializer is the create function. As usual, it has a try/exceot block which attempts to create the like. If the user has already liked the comment then a validation error is raised along with an error message explaining the problem.
 
+On my views.py file, my commentLikeListView is a listCreateAPIView. If signed in and authenticated, you can use the form at the bottom of the page to select a comment from the dropown list and press confirm to like it. I have used DjangFilterBackend which lets users filter the comment likes by a certain comment. Lastly, the detail view retrieves a specified like and if you are the owner of it, then it can be deleted from this page.
