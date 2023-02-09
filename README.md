@@ -65,3 +65,9 @@ This model stores all the data on comment likes. Similar to alot of my other mod
 The only extra field present in my serializer is comment_text which as the name suggests, shows the actual comment to the user. Also present in my serializer is the create function. As usual, it has a try/exceot block which attempts to create the like. If the user has already liked the comment then a validation error is raised along with an error message explaining the problem.
 
 On my views.py file, my commentLikeListView is a listCreateAPIView. If signed in and authenticated, you can use the form at the bottom of the page to select a comment from the dropown list and press confirm to like it. I have used DjangFilterBackend which lets users filter the comment likes by a certain comment. Lastly, the detail view retrieves a specified like and if you are the owner of it, then it can be deleted from this page.
+
+### Categories App
+
+The Category model stores the names of a category that can be assigned to a post on the creation of it. Within the Post model, there is a category field present which is a foreignKey value linking to this model. The idea of this, is that the user will have access to a dropdown list of categories on the form in the frot-end that they can choose from and assign their post to. As well as assigning a category when creating a post, users can assign or change them when editing one of their posts also. 
+
+In my CategorySerializer, the fields present in my model are listed here as well as one extra which adds up all the posts assigned to a specific category. In my views.py file here, I have assigned both the listView and the detailView the permission class of IsAdminOrReadOnly. This is because I want only an admin to have the ability to create new categories or delete exisiting ones. Search and ordering have been included here so users searching for a single category can be found or categories can be ordered based on their timestamp of creation.
