@@ -102,3 +102,21 @@ Below is a list of the requirements that were included to make this project
 - SimpleJWT
 
 The primary language used in the production of this api was Django and the django-rest-framework. Pillow is a library that is a required depenedency you have to install when using an imageField on any of your models. I used Cloudinary for my default image storage. This is because Django uses an ephemeral file system, so Cloudinary was a  great choice to prevent my image files being deleted after a certain amount of time has passed. Django filters was a library used to add the functionality to filter the data in my views.py files. It makes it extremly easy to add this functionality and improves the user experience considerably. To add token refreshing to my project, I used simpleJWT as shown in the drf_api walkthrough.
+
+## Deployment 
+
+### Local Deployment
+
+The points below outline the steps taken to deploy my project to a local server
+
+- Create a new GitHub repository
+- Select the code-institute-full-template and type in a name for the repository 
+- Click on the green Gitpod button to open a new Gitpod workspace
+- Download any required dependencies such as Django, Django-Rest-Framework, Pyscogpg2 etc
+- Create a requirements.txt file using the command pip3 freeze --local > requirements.txt
+- Create a new Django project using the command django-admin startproject "project-name-here" 
+- Create a new Django app using the command python3 manage.py startapp "app-name-here"
+- Add the above app name to the list of installed apps in your settings.py file
+- Migrate the changes to your database using the command python3 manage.py migrate
+- Run the project using the command python3 manage.py runserver
+- The project should now be up and running on port 8000
