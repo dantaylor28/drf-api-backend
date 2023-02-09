@@ -50,6 +50,14 @@ My serializers file simply contains the fields from my models and the extra read
 
 My PinListView is a ListCreateAPIView so it displays a form on the page to pin a post as long as you are logged in and authenticated. The pins can be filtered through by post title or the owner of the pins using DjangoFilterBackend. In my detail view, it is a retrieveDestroyAPIView as pins cannot be edited. If you are the owner of the pin, you can use the delete button on this page to remove them from the database.
 
+### Comments App
+
+The comments app stores all data relating to any comments left on a post. It stores data on the post, user, timestamp and the text commented. My model has two foreign key fields, one to User and one to Post. 
+
+In my CommentSerializer, I have added some extra fields to give users more detail on the comment and user who left it. I have imported and used naturaltime to display the timestamps more appropriately for a comment for example, 1 day, 4 hrs ago. Num_of_comment_likes is another field that I have included here. This relates to my comment_likes app which is used for liking different user comments. This field will use the Count method on my views.py to display how many likes a specific comment has. A second commentDetailSerializer class has also been implemented here. It adds the post_id via a readOnly field and it is used in my CommentDetailView. The reason for this is that it will auto-fill the post of the comment a user is trying to edit. This will save the user time trying to find the post relating to the comment and therfore provides a better user experience overall. This piece of code is accredited to the drf_api walkthrough project.
+
+In my views.py file, the list view is a ListCreateAPIView as normal and includes the annotate method which is used to calculate the num_of_comment_likes and display the results to the user. Comments can be filtered by owner and post, while ordering fields are also available to display comments in the order of creation via their timestamp. The detail view is a retrieveUpdateDestroy view and the only difference here is that the serializer class is set to CommentDetailSerializer as opposed to CommentSerializer so the post is auto-selected.
+
 
 
 
