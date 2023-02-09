@@ -120,3 +120,78 @@ The points below outline the steps taken to deploy my project to a local server
 - Migrate the changes to your database using the command python3 manage.py migrate
 - Run the project using the command python3 manage.py runserver
 - The project should now be up and running on port 8000
+
+### Live Deployment 
+
+The points below document the steps taken to connect to the ElephantSQL database and then deploy my live project using Heroku
+
+- On GitHub, fork your repository so it is not deleted after inactivity
+- The database used in production is only accessible within Gitpod, so you first need to create a new database
+- Navigate to ElephantSQL.com and navigate to your dashboard or create an account if you do not have one
+- Click on the link "Create New Instance"
+- Fill in the details required - Your name, select the tiny turtle(free plan) and leave the tags field blank.
+- Select the region thats most relevant to you
+- Click "review", ensure all of the information you have given is correct and then select "Create Instance"
+- Return to your dashboard and navigate to the database instance name for the project
+- Next you will need to copy the database URL that is present, as you will need that for Heroku
+- Navigate to heroku.com and go to your dashboard or create an account if you haven't already 
+- Click on "New" and then "Create new app"
+- select the region that applies to you, give the app a unique name and press create app
+- Navigate to the settings tab, and open the config vars
+- Add a config var named "DATABASE_URL" and paste in the value that you copied from ElephantSQL
+- Use the below command to install the necessary items to connect to your external database
+ pip3 install dj_database_url==0.5.0 psycopg2
+- In your settings.py file import dj_database_url
+- Navigate down to the databases section and update it with the below code
+  if 'DEV' in os.environ:
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.sqlite3',
+             'NAME': BASE_DIR / 'db.sqlite3',
+         }
+     }
+ else:
+     DATABASES = {
+         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+     }
+- Next, go to your env.py file and add a new environment variable as shown below
+os.environ.setdefault("DATABASE_URL", "your PostgreSQL URL here")
+- Temporarily comment out the below code so Gitpod can connect to the new database
+os.environ['DEV'] = '1'
+- The next step is to use the below code to migrate your changes to the database
+ python3 manage.py migrate
+- In the terminal of gitpod, install gunicorn and update your requirements.txt file using the two below commands
+ pip3 install gunicorn django-cors-headers
+  pip freeze --local > requirements.txt
+-  You now need to create a Procfile and add the below code to it 
+release: python manage.py makemigrations && python manage.py migrate
+ web: gunicorn "your project name here".wsgi
+- Next you need to update the value of ALLOWED_HOSTS in your settings.py file to the below code 
+ ALLOWED_HOSTS = ["localhost", "your_app_name>.herokuapp.com"]
+- Add "corsheaders" to your list of INSTALLED_APPS in settings.py
+- Add corsheaders middleware to the top of the MIDDLEWARE as shown below
+MIDDLEWARE = [
+     'corsheaders.middleware.CorsMiddleware',
+- Under the middleware list, set the ALLOWED_ORIGINS for the network requests made to the server with the below code
+if 'CLIENT_ORIGIN' in os.environ:
+     CORS_ALLOWED_ORIGINS = [
+         os.environ.get('CLIENT_ORIGIN')
+     ]
+ else:
+     CORS_ALLOWED_ORIGIN_REGEXES = [
+         r"^https://.*\.gitpod\.io$",
+     ]
+- Remove the value for the secret key and replace it with the below code instead
+SECRET_KEY = os.getenv('SECRET_KEY')
+- Now set a new value for your secret key in the env.py file as outlined below
+os.environ.setdefault("SECRET_KEY", "CreateANEWRandomValueHere")
+- Set the debug value to the below code to ensure its only true in development mode
+ DEBUG = 'DEV' in os.environ
+- Comment in the DEV variable in the env.py file that we commented out earlier
+- Lastly, commit and push your changes to github
+- Back on the Heroku dashboard, we need to add two final config vars
+- Add a SECRET_KEY and a value of your choice 
+- Copy and paste the CLOUDINARY_URL from cloudinary.com and add that value to your config vars also 
+- Navigate to the deploy tab on Heroku
+- Connect to your GitHub account and type your repository name 
+- Click deploy and your project should now be live
