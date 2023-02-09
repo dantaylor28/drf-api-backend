@@ -42,5 +42,14 @@ This app contains all instances of a user that is following or is followed by an
 
 My serializers.py contains a couple of extra readOnly fields just specifying the owner and the user who received the follow. The create function is present so users can succesfully create a follow and details of the Integrity error raised from self following is also present here. My views are very simple and contain minimal information also. The list view allows users to list and create followers and if you are the owner of a follow this can then be deleted in the FollowerDetail view.
 
+### Pins App
+
+Pin is the first of my own custom models, and it holds all data of when a user pins a post. M Pin model has two foreign keys, one to User and the other to Post. These are necessary to ensure the model can determine the user that is performing the pin and the post that they are perfoming it to. I have let users have the ability to pin their own posts as well as others. This is because pinned posts will be added to the current users board, and therefore users may wish to have their own posts displaying there too. I have included a unique together field which contains owner and post on my model also. This is present to stop users from pinning a post more than once, and an error will be raised if they attempt to do so.
+
+My serializers file simply contains the fields from my models and the extra readOnly field, post_title. This just gets the title of the pinned post, to provide extra information to the user. The create function is here again, and raises a validation error with an appropriate error message if an attempt is made to pin a post more than once.
+
+My PinListView is a ListCreateAPIView so it displays a form on the page to pin a post as long as you are logged in and authenticated. The pins can be filtered through by post title or the owner of the pins using DjangoFilterBackend. In my detail view, it is a retrieveDestroyAPIView as pins cannot be edited. If you are the owner of the pin, you can use the delete button on this page to remove them from the database.
+
+
 
 
