@@ -27,6 +27,7 @@ class PostListView(generics.ListCreateAPIView):
 
     search_fields = [
         'title',
+        'caption',
         'category__name',
         'owner__username',
         'owner__profile__name'
