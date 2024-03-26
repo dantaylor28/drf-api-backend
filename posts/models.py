@@ -17,7 +17,7 @@ class Post(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.RESTRICT, default=10, blank=True)
     post_image = models.ImageField(
-        upload_to='images/', default='../default_post_l03unw', blank=True
+        upload_to='images/', default='../placeholder_post_pic_x9ygad', blank=True
     )
 
     class Meta:
