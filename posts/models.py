@@ -15,7 +15,7 @@ class Post(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(
-        Category, on_delete=models.RESTRICT, default=10, blank=True)
+        Category, on_delete=models.RESTRICT, null=True, blank=True)
     post_image = models.ImageField(
         upload_to='images/', default='../placeholder_post_pic_x9ygad', blank=True
     )
